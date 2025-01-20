@@ -1,3 +1,7 @@
+// TypeScript configuration file. Tells TypeScript how to compile your TypeScript code into JavaScripts
+// compilerOptions: Specifies the settings for the TypeScript compiler
+// include: tells typeScrip which files should be including for compiling
+
 {
   "compilerOptions": {
     "target": "ESNext",
