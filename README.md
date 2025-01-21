@@ -15,3 +15,8 @@ running npm install will install the dependencies listed in package.json, and yo
 
 
 these files and configurations work together to mae suer the development environment is set up proeperly and that the project builds, runs, and is optimized correctly 
+
+postcss.config.js
+tailwind.config.js
+tsconfig.node.js
+eslintrc.cjs
