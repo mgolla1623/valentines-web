@@ -3,7 +3,7 @@
    and rendering them.
  */
    "use client";
-   import { useState } from "react";
+   import { useState, useEffect } from "react";
    import React from 'react';
    import val2 from "./images/newgirl.gif";
    import val1 from "./images/valentines.gif";
@@ -12,6 +12,7 @@
    // Main function that handles the "Yes" and "No" button interaction
    export default function Page() {
      const [noCount, setNoCount] = useState(0);
+     const [showImage, setShowImage] = useState(false); // State for delayed image
      const [yesPressed, setYesPressed] = useState(false);
      const yesButtonSize = noCount * 20 + 16;
 
@@ -44,25 +45,17 @@
       // Return a phrase from the array based on the 'No' count, up to a max
        return phrases[Math.min(noCount, phrases.length - 1)];
      };
+    // Use useEffect to trigger the image display after a delay
+    useEffect(() => {
+      const timer = setTimeout(() => {
+        setShowImage(true); // Show the image after 10 seconds
+      }, 10000); // 10000ms = 10 seconds
 
-    /*
-     const scatteredImages = [
-      { src: val1, alt: "Valentine's GIF 1", style: { top: "5%", left: "5%" } },
-      { src: val2, alt: "New Girl GIF", style: { top: "5%", right: "5%" } },
-      { src: val1, alt: "Hearts GIF", style: { bottom: "5%", left: "5%" } },
-      { src: val2, alt: "Love Bear GIF", style: { bottom: "5%", right: "5%" } },
-    ];
-    
-    {scatteredImages.map((img, index) => (
-      <img
-        key={index}
-        src={img.src}
-        alt={img.alt}
-        className="absolute w-40 h-40 rounded-full shadow-lg"
-        style={img.style}
-      />
-    ))}
-    */
+      // Clean up the timer on component unmount
+      return () => clearTimeout(timer);
+    }, []); // Empty dependency array means this effect runs once when the component mounts
+     
+
     
 
      return (
@@ -107,6 +100,21 @@
                   {noCount === 0 ? "No" : getNoButtonText()}
                 </button>
               </div>
+
+
+
+              {showImage && (
+            <img
+              src={val2} // You can change this to any image you want to appear after the delay
+              alt="Delayed Valentine's Image"
+              className="mt-8 w-32 h-32"
+              style={{ top: '20%', left: '30%' }} //
+            />
+          )}
+
+
+
+
             </div>
           </>
         )}
@@ -117,3 +125,25 @@
 
 
 
+
+
+
+    /*
+     const scatteredImages = [
+      { src: val1, alt: "Valentine's GIF 1", style: { top: "5%", left: "5%" } },
+      { src: val2, alt: "New Girl GIF", style: { top: "5%", right: "5%" } },
+      { src: val1, alt: "Hearts GIF", style: { bottom: "5%", left: "5%" } },
+      { src: val2, alt: "Love Bear GIF", style: { bottom: "5%", right: "5%" } },
+    ];
+    
+    {scatteredImages.map((img, index) => (
+      <img
+        key={index}
+        src={img.src}
+        alt={img.alt}
+        className="absolute w-40 h-40 rounded-full shadow-lg"
+        style={img.style}
+      />
+    ))}
+    */
+    
