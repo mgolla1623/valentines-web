@@ -1,0 +1,6 @@
+/*
+contains global styles that apply across the entire application.
+*/
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
