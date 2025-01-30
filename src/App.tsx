@@ -11,8 +11,8 @@
    import flower1 from "./images/flower1.png";
    import flower2 from "./images/flower2.png";
    import flower3 from "./images/flower3.png";
-   import flower4 from "./images/flower4.png";
    import flower5 from "./images/flower5.png";
+   import flower6 from "./images/flower6.webp";
    
    interface FlowerImage {
      id: number;
@@ -30,7 +30,7 @@
      const heartContainerRef = useRef<HTMLDivElement>(null);
    
      // Array of flower image sources
-     const flowerSources = [flower, flower1, flower2, flower3, flower4, flower5]; // All image sources for flowers
+     const flowerSources = [flower, flower1, flower2, flower3, flower6, flower5] // All image sources for flowers
    
      // Function to handle 'No' button click
      const handleNoClick = () => {
@@ -69,12 +69,12 @@
    
        // Manually set the sizes for each flower
        const flowerSizes = [
-         { width: "90px", height: "140px" },
-         { width: "60px", height: "140px" },
-         { width: "60px", height: "100px" },
-         { width: "70px", height: "140px" },
-         { width: "70px", height: "140px" },
-         { width: "70px", height: "140px" },
+         { width: "100px", height: "150px" },
+         { width: "100px", height: "140px" },
+         { width: "60px", height: "125px" },
+         { width: "70px", height: "135px" },
+         { width: "100px", height: "140px" },
+         { width: "70px", height: "130px" },
 
        ];
    
@@ -219,7 +219,7 @@
           <>
             <img className="h-[200px]" src={val1} alt="Valentine's Image" />
     
-            <h1 className="text-5xl font-extrabold text-white drop-shadow-lg">
+            <h1 className="text-52xl font-extrabold text-white drop-shadow-lg">
               Will you be my Valentine?
             </h1>
             <div className="flex items-center">
