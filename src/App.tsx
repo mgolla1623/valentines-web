@@ -79,7 +79,7 @@
        ];
    
        for (let i = 1; i <= 50; i++) {
-         const delay = i * 3000; // Images appear at intervals of 3 seconds
+         const delay = i * 4000; // Images appear at intervals of 3 seconds
          const timer = window.setTimeout(() => {
           const sizeIndex = i % flowerSizes.length;
           const srcIndex = i % flowerSources.length;
@@ -107,7 +107,7 @@
      }, []);
 
      useEffect(() => {
-      const duration = 3000;
+      const duration = 4000;
       const speed = 0.5;
       const cursorXOffset = 0;
       const cursorYOffset = -5;
@@ -119,8 +119,6 @@
         direction: number; 
         scale: number;
       })[] = [];
-      let down = false;
-      let event: MouseEvent | Touch | null = null;
     
       function generateHeart(
         x: number,
@@ -174,59 +172,29 @@
         });
       }
     
-      function check() {
-        if (down && event) {
-          const start = 1 - Math.round(Math.random()) * 2;
-          const scale = Math.random() * Math.random() * 0.8 + 0.2;
-          const bound = 30 + Math.random() * 20;
-          generateHeart(
-            event.pageX + cursorXOffset,
-            event.pageY + cursorYOffset,
-            bound,
-            start,
-            scale
-          );
-        }
-      }
-
-      
-    
-      const onMouseDown = (e: MouseEvent) => {
-        down = true;
-        event = e;
+      const onMouseMove = (e: MouseEvent) => {
+        const start = 1 - Math.round(Math.random()) * 2;
+        const scale = Math.random() * Math.random() * 0.8 + 0.2;
+        const bound = 20 + Math.random() * 30;
+        generateHeart(
+          e.pageX + cursorXOffset,
+          e.pageY + cursorYOffset,
+          bound,
+          start,
+          scale
+        );
       };
-      const onMouseUp = () => (down = false);
-      const onMouseMove = (e: MouseEvent) => (event = e);
-      const onTouchStart = (e: TouchEvent) => {
-        down = true;
-        event = e.touches[0];
-      };
-      const onTouchEnd = () => (down = false);
-      const onTouchMove = (e: TouchEvent) => (event = e.touches[0]);
     
-      document.addEventListener("mousedown", onMouseDown);
-      document.addEventListener("mouseup", onMouseUp);
       document.addEventListener("mousemove", onMouseMove);
-      document.addEventListener("touchstart", onTouchStart);
-      document.addEventListener("touchend", onTouchEnd);
-      document.addEventListener("touchmove", onTouchMove);
     
       const frameInterval = setInterval(frame, 16);
-      const checkInterval = setInterval(check, 100);
     
       return () => {
-        document.removeEventListener("mousedown", onMouseDown);
-        document.removeEventListener("mouseup", onMouseUp);
         document.removeEventListener("mousemove", onMouseMove);
-        document.removeEventListener("touchstart", onTouchStart);
-        document.removeEventListener("touchend", onTouchEnd);
-        document.removeEventListener("touchmove", onTouchMove);
         clearInterval(frameInterval);
-        clearInterval(checkInterval);
       };
     }, []);
     
-
     return (
       <div className="relative flex h-screen flex-col items-center justify-center bg-gradient-to-r from-pink-200 to-pink-200 overflow-hidden">
         
