@@ -3,7 +3,8 @@
    and rendering them.
  */
    "use client";
-   import { useState, useEffect } from "react";
+   import { useState, useEffect, useRef} from "react";
+   import "./HeartAnimation.css"; // Import the CSS file
    import val1 from "./images/valentines.gif";
    import val2 from "./images/newgirl.gif";
    import flower from "./images/flower.png";
@@ -25,6 +26,8 @@
      const [flowerImages, setFlowerImages] = useState<FlowerImage[]>([]); // Store flower images
      const [yesPressed, setYesPressed] = useState(false);
      const yesButtonSize = noCount * 20 + 16;
+
+     const heartContainerRef = useRef<HTMLDivElement>(null);
    
      // Array of flower image sources
      const flowerSources = [flower, flower1, flower2, flower3, flower4, flower5]; // All image sources for flowers
@@ -39,12 +42,14 @@
        const phrases = [
          "No",
          "Are you sure?",
+         "But, ",
          "What if I asked really nicely?",
          "Pretty please",
          "What about some chipotle?",
          "Srlsly, no?!",
-         "PLEASE POOKIE",
-         "But, ",
+         "PLEASE",
+         "i WILL poke you",
+         "No way you pressed no again",
          "I am going to die",
          "Yep im dead",
          "ok ur talking to my ghost",
@@ -100,18 +105,140 @@
    
        return () => timers.forEach(window.clearTimeout);
      }, []);
+
+     useEffect(() => {
+      const duration = 3000;
+      const speed = 0.5;
+      const cursorXOffset = 0;
+      const cursorYOffset = -5;
+      let hearts: (HTMLDivElement & { 
+        time: number; 
+        x: number; 
+        y: number; 
+        bound: number; 
+        direction: number; 
+        scale: number;
+      })[] = [];
+      let down = false;
+      let event: MouseEvent | Touch | null = null;
+    
+      function generateHeart(
+        x: number,
+        y: number,
+        xBound: number,
+        xStart: number,
+        scale: number
+      ) {
+        if (!heartContainerRef.current) return;
+    
+        const heart = document.createElement("div") as HTMLDivElement & { 
+          time: number; 
+          x: number; 
+          y: number; 
+          bound: number; 
+          direction: number; 
+          scale: number;
+        };
+        
+        heart.className = "heart";
+        heartContainerRef.current.appendChild(heart);
+    
+        heart.time = duration;
+        heart.x = x;
+        heart.y = y;
+        heart.bound = xBound;
+        heart.direction = xStart;
+        heart.style.left = `${x}px`;
+        heart.style.top = `${y}px`;
+        heart.scale = scale;
+        heart.style.transform = `scale(${scale}, ${scale})`;
+    
+        hearts.push(heart);
+      }
+    
+      function frame() {
+        hearts = hearts.filter((heart) => {
+          heart.time -= 16;
+          if (heart.time > 0) {
+            heart.y -= speed;
+            heart.style.top = `${heart.y}px`;
+            heart.style.left = `${
+              heart.x +
+              (heart.direction * heart.bound * Math.sin((heart.y * heart.scale) / 30)) / heart.y * 200
+            }px`;
+            return true;
+          } else {
+            heart.remove();
+            return false;
+          }
+        });
+      }
+    
+      function check() {
+        if (down && event) {
+          const start = 1 - Math.round(Math.random()) * 2;
+          const scale = Math.random() * Math.random() * 0.8 + 0.2;
+          const bound = 30 + Math.random() * 20;
+          generateHeart(
+            event.pageX + cursorXOffset,
+            event.pageY + cursorYOffset,
+            bound,
+            start,
+            scale
+          );
+        }
+      }
+    
+      const onMouseDown = (e: MouseEvent) => {
+        down = true;
+        event = e;
+      };
+      const onMouseUp = () => (down = false);
+      const onMouseMove = (e: MouseEvent) => (event = e);
+      const onTouchStart = (e: TouchEvent) => {
+        down = true;
+        event = e.touches[0];
+      };
+      const onTouchEnd = () => (down = false);
+      const onTouchMove = (e: TouchEvent) => (event = e.touches[0]);
+    
+      document.addEventListener("mousedown", onMouseDown);
+      document.addEventListener("mouseup", onMouseUp);
+      document.addEventListener("mousemove", onMouseMove);
+      document.addEventListener("touchstart", onTouchStart);
+      document.addEventListener("touchend", onTouchEnd);
+      document.addEventListener("touchmove", onTouchMove);
+    
+      const frameInterval = setInterval(frame, 16);
+      const checkInterval = setInterval(check, 100);
+    
+      return () => {
+        document.removeEventListener("mousedown", onMouseDown);
+        document.removeEventListener("mouseup", onMouseUp);
+        document.removeEventListener("mousemove", onMouseMove);
+        document.removeEventListener("touchstart", onTouchStart);
+        document.removeEventListener("touchend", onTouchEnd);
+        document.removeEventListener("touchmove", onTouchMove);
+        clearInterval(frameInterval);
+        clearInterval(checkInterval);
+      };
+    }, []);
+    
+
+
    
      return (
-       <div className="relative flex h-screen flex-col items-center justify-center bg-gradient-to-r from-pink-200 to-pink-200 overflow-hidden">
+      <div className="relative flex h-screen flex-col items-center justify-center bg-gradient-to-r from-pink-200 to-pink-200 overflow-hidden">
+        <div ref={heartContainerRef} className="absolute top-0 left-0 w-full h-full"></div>
          {yesPressed ? (
            <div className="flex flex-col items-center justify-center">
              <img
                src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
-               className="w-64 h-64 rounded-full shadow-lg"
+               className="w-64 h-64 shadow-lg"
                alt="Celebration GIF"
              />
              <div className="my-4 text-4xl font-bold text-white animate-bounce">
-               WOOOOOO!!! I love you pookie!! ;))
+               WOOOOOO!!! THE BEST VALENTINE EVER!! I love you!!
              </div>
            </div>
          ) : (
@@ -119,7 +246,7 @@
              <img className="h-[200px]" src={val1} alt="Valentine's Image" />
    
              <h1 className="text-5xl font-extrabold text-white drop-shadow-lg">
-               Will you be my Valentine? 💘
+               Will you be my Valentine?
              </h1>
              <div className="flex items-center">
                <div className="flex items-center mt-6 space-x-4">
@@ -161,22 +288,3 @@
    }
    
 
-
-/*
- const scatteredImages = [
-  { src: val1, alt: "Valentine's GIF 1", style: { top: "5%", left: "5%" } },
-  { src: val2, alt: "New Girl GIF", style: { top: "5%", right: "5%" } },
-  { src: val1, alt: "Hearts GIF", style: { bottom: "5%", left: "5%" } },
-  { src: val2, alt: "Love Bear GIF", style: { bottom: "5%", right: "5%" } },
-];
- 
-{scatteredImages.map((img, index) => (
-  <img
-    key={index}
-    src={img.src}
-    alt={img.alt}
-    className="absolute w-40 h-40 rounded-full shadow-lg"
-    style={img.style}
-  />
-))}
-*/
