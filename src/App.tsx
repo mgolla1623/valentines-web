@@ -47,6 +47,9 @@
          "Pretty please",
          "What about some chipotle?",
          "Srlsly, no?!",
+         "But look at all these flowers I got for you",
+         "picked them out MYSELF",
+         "still NO??",
          "PLEASE",
          "i WILL poke you",
          "No way you pressed no again",
@@ -78,8 +81,8 @@
 
        ];
    
-       for (let i = 1; i <= 50; i++) {
-         const delay = i * 4000; // Images appear at intervals of 3 seconds
+       for (let i = 1; i <= 57; i++) {
+         const delay = i * 1575; // Images appear at intervals of 3 seconds
          const timer = window.setTimeout(() => {
           const sizeIndex = i % flowerSizes.length;
           const srcIndex = i % flowerSources.length;
@@ -93,7 +96,7 @@
                id: i,
                src: selectedFlower, 
                position: {
-                 left: `${Math.random() * 90}%`, // Random horizontal position
+                 left: `${Math.random() * 95}%`, // Random horizontal position
                  bottom: "0",
                },
                size: randomSize, // Use predefined sizes
@@ -196,7 +199,7 @@
     }, []);
     
     return (
-      <div className="relative flex h-screen flex-col items-center justify-center bg-gradient-to-r from-pink-200 to-pink-200 overflow-hidden">
+      <div className="relative flex h-screen flex-col items-center justify-center bg-gradient-to-t from-green-50 to-blue-100 overflow-hidden">
         
         {/* Heart animation container */}
         <div
@@ -208,24 +211,32 @@
           <div className="flex flex-col items-center justify-center">
             <img
               src="https://media.tenor.com/gUiu1zyxfzYAAAAi/bear-kiss-bear-kisses.gif"
-              className="w-64 h-64 shadow-lg"
+              className="w-64 h-64"
               alt="Celebration GIF"
             />
-            <div className="my-4 text-4xl font-bold text-white animate-bounce">
-              WOOOOOO!!! THE BEST VALENTINE EVER!! I love you!!
+
+            <div className="text-[25px] font-extrabold text-pink-600  text-center animate-bounce">
+              WOOOOOO!!! 
             </div>
+            <div className="text-[25px] font-extrabold text-pink-600  text-center animate-bounce">
+            THE BEST VALENTINE EVER!! I love you!! 
+            </div>
+
+
+            
           </div>
         ) : (
           <>
             <img className="h-[200px]" src={val1} alt="Valentine's Image" />
     
-            <h1 className="text-52xl font-extrabold text-white drop-shadow-lg">
-              Will you be my Valentine?
+            <h1 className="text-[25px] font-extrabold text-pink-500 drop-shadow-[0_4px_6px_rgba(0,0,0,0.2)]">
+                Will you be my Valentine?
             </h1>
+
             <div className="flex items-center">
               <div className="flex items-center mt-6 space-x-4">
                 <button
-                  className={`mr-4 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700`}
+                  className={`mr-4 rounded bg-green-500 px-6 py-3 font-bold text-white shadow-md hover:bg-green-700 ransition-transform transform hover:scale-105`}
                   style={{ fontSize: yesButtonSize }}
                   onClick={() => setYesPressed(true)}
                 >
@@ -233,7 +244,7 @@
                 </button>
                 <button
                   onClick={handleNoClick}
-                  className="rounded bg-red-500 px-6 py-3 font-bold text-white shadow-md hover:bg-red-600 transition-transform transform hover:scale-105"
+                  className={'mr-4 rounded bg-red-500 px-6 py-3 font-bold text-white shadow-md hover:bg-red-600 transition-transform transform hover:scale-105'}
                 >
                   {noCount === 0 ? "No" : getNoButtonText()}
                 </button>
