@@ -39,8 +39,8 @@ pnpm run dev
 ```
 
 ### **5. View the Site**  
-After running the command above, a local website should open in your browser. Click on it and see what I made for you! 💖  
+After running the command above, a local website should open in your browser. Click on it and see what pops up!
 
 ---
 
-Hopefully, this works!! AHHHHH 🎉 Let me know if you run into any issues. 😅
+Hopefully, this works!!
