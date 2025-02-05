@@ -1,13 +1,8 @@
 # **valentines-web** 💌  
-
-Hi Liam,  
-I'm sure you've seen something like this online before, but I wanted to make my own just for you!!  
-
-Unfortunately, I've been struggling to deploy this. I *think* I know what the issue is, but fixing it has been a bit of a headache. Since it's already February, I need to ask you something important!!  
-
+(inspo from https://gist.github.com/tnarla/0c09a11fea366145ba684fe6ebf578c5 )
 ## **How to Run This Locally**  
 
-Follow these steps to see what I made for you:  
+Follow these steps to see:  
 
 ### **1. Clone the Repository**  
 Open your terminal and navigate to a folder where you’d like to save this project. Then, run:  
